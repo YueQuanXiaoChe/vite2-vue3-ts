@@ -10,23 +10,38 @@
   <button type="submit" @click="goToWelcome">Welcome</button>
 
   <router-view></router-view>
+
+  <div>
+    Count: {{ $store.state.count }}
+    <button type="submit" @click="increment">Add</button>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 
 export default defineComponent({
   name: "App",
-  methods: {
-    goToLogin() {
-      this.$router.push("/");
-    },
-    goToHome() {
-      this.$router.push("/home");
-    },
-    goToWelcome() {
-      this.$router.push("/home/welcome");
-    },
+  setup() {
+    const router = useRouter();
+    const goToLogin = () => {
+      router.push("/");
+    };
+    const goToHome = () => {
+      router.push("/home");
+    };
+    const goToWelcome = () => {
+      router.push("/home/welcome");
+    };
+
+    const store = useStore();
+    const increment = () => {
+      store.commit("increment");
+    };
+
+    return { goToLogin, goToHome, goToWelcome, increment };
   },
 });
 </script>
