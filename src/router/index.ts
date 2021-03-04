@@ -9,17 +9,11 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/login",
     name: "Login",
-    meta: {
-      title: "登录",
-    },
     component: () => import("@/views/Login/index.vue"),
   },
   {
     path: "/home",
     name: "Home",
-    meta: {
-      title: "首页",
-    },
     component: () => import("@/views/Home/index.vue"),
     children: HomeRoutes,
   },

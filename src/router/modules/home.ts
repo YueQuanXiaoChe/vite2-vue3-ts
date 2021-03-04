@@ -4,9 +4,6 @@ const homeRoutes: Array<RouteRecordRaw> = [
   {
     path: "welcome",
     name: "Welcome",
-    meta: {
-      title: "欢迎",
-    },
     component: () => import("@/views/Home/welcome.vue"),
   },
 ];

@@ -1,17 +1,32 @@
 <template>
-  <router-view></router-view>
   <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+  <div>
+    <router-link to="/">Go to Login</router-link> |
+    <router-link to="/home">Go to Home</router-link> |
+    <router-link to="/home/welcome">Go to Welcome</router-link>
+  </div>
+  <button type="submit" @click="goToLogin">Login</button>
+  <button type="submit" @click="goToHome">Home</button>
+  <button type="submit" @click="goToWelcome">Welcome</button>
+
+  <router-view></router-view>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import HelloWorld from "./components/HelloWorld.vue";
 
 export default defineComponent({
   name: "App",
-  components: {
-    HelloWorld,
+  methods: {
+    goToLogin() {
+      this.$router.push("/");
+    },
+    goToHome() {
+      this.$router.push("/home");
+    },
+    goToWelcome() {
+      this.$router.push("/home/welcome");
+    },
   },
 });
 </script>
