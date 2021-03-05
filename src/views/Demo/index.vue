@@ -7,6 +7,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { Button } from "vant";
+import "vant/es/button/style/index";
 
 export default defineComponent({
   components: {
