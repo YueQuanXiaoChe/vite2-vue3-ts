@@ -18,6 +18,11 @@ const routes: Array<RouteRecordRaw> = [
     children: HomeRoutes,
   },
   {
+    path: "/demo",
+    name: "Demo",
+    component: () => import("@/views/Demo/index.vue"),
+  },
+  {
     path: "/:pathMatch(.*)*",
     name: "NotFound",
     component: () => import("@/views/NotFound/index.vue"),

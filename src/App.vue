@@ -8,6 +8,7 @@
   <button type="submit" @click="goToLogin">Login</button>
   <button type="submit" @click="goToHome">Home</button>
   <button type="submit" @click="goToWelcome">Welcome</button>
+  <button type="submit" @click="goToDemo">Demo</button>
 
   <router-view></router-view>
 
@@ -35,13 +36,16 @@ export default defineComponent({
     const goToWelcome = () => {
       router.push("/home/welcome");
     };
+    const goToDemo = () => {
+      router.push("/demo");
+    };
 
     const store = useStore();
     const increment = () => {
       store.commit("increment");
     };
 
-    return { goToLogin, goToHome, goToWelcome, increment };
+    return { goToLogin, goToHome, goToWelcome, increment, goToDemo };
   },
 });
 </script>
