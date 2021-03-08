@@ -1,30 +1,49 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
   <div>
-    <router-link to="/">Go to Login</router-link> |
-    <router-link to="/home">Go to Home</router-link> |
-    <router-link to="/home/welcome">Go to Welcome</router-link>
+    <van-button type="primary" @click="goToLogin" class="test-button"
+      >Login</van-button
+    >
+    <van-button type="primary" @click="goToHome" class="test-button"
+      >Home</van-button
+    >
+    <van-button type="primary" @click="goToWelcome" class="test-button"
+      >Welcome</van-button
+    >
+    <van-button type="primary" @click="goToDemo" class="test-button"
+      >Demo</van-button
+    >
   </div>
-  <button type="submit" @click="goToLogin">Login</button>
-  <button type="submit" @click="goToHome">Home</button>
-  <button type="submit" @click="goToWelcome">Welcome</button>
-  <button type="submit" @click="goToDemo">Demo</button>
-
   <router-view></router-view>
-
   <div>
     Count: {{ $store.state.count }}
-    <button type="submit" @click="increment">Add</button>
+    <van-button type="primary" @click="increment" class="test-button"
+      >Add</van-button
+    >
+  </div>
+  <div class="test-viewport">测试转换</div>
+  <van-field v-model="value"></van-field>
+  <div class="test-autoprefixer">
+    <div>aaa</div>
+    <div>bbb</div>
+    <div>ccc</div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
+import { Button, Field } from "vant";
+import "vant/es/button/style/index";
+import "vant/es/field/style/index";
 
 export default defineComponent({
   name: "App",
+  components: {
+    [Button.name]: Button,
+    [Field.name]: Field,
+  },
   setup() {
     const router = useRouter();
     const goToLogin = () => {
@@ -45,18 +64,36 @@ export default defineComponent({
       store.commit("increment");
     };
 
-    return { goToLogin, goToHome, goToWelcome, increment, goToDemo };
+    const show = ref(true);
+    const value = ref("asd");
+
+    return {
+      goToLogin,
+      goToHome,
+      goToWelcome,
+      increment,
+      goToDemo,
+      show,
+      value,
+    };
   },
 });
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+<style lang="less" scoped>
+.test-viewport {
+  width: 375px;
+  height: 100px;
+  font-size: 40px;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  line-height: 100px;
+  background: #13b5b1;
+  margin-top: 10px;
+}
+.test-button {
+  margin: 0 5px;
+}
+.test-autoprefixer {
+  display: flex;
 }
 </style>
