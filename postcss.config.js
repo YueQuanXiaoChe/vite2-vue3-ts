@@ -5,11 +5,7 @@ module.exports = {
       overrideBrowserslist: [
         "> 0.5%",
         "last 2 versions", // 所有主流浏览器最近2个版本
-        "ie >= 10",
-        "iOS >= 8",
-        "Android >= 4",
       ],
-      grid: true,
     },
     "postcss-px-to-viewport": {
       unitToConvert: "px", // 要转化的单位
