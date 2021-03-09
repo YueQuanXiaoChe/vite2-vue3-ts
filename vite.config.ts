@@ -1,10 +1,12 @@
-import { UserConfigExport } from 'vite';
-import styleImport from 'vite-plugin-style-import';
-import vue from '@vitejs/plugin-vue';
+import type { UserConfig, ConfigEnv } from 'vite';
 import path from 'path';
 
+import { createVitePlugins } from './build/vite/plugin';
+
 // https://vitejs.dev/config/
-export default (): UserConfigExport => {
+export default ({ command, mode }: ConfigEnv): UserConfig => {
+  const isBuild = command === 'build';
+
   return {
     css: {
       preprocessorOptions: {
@@ -13,20 +15,10 @@ export default (): UserConfigExport => {
         }
       }
     },
-    plugins: [
-      vue(),
-      styleImport({
-        libs: [
-          {
-            libraryName: 'vant',
-            esModule: true,
-            resolveStyle: (name) => {
-              return `vant/es/${name}/style/index`;
-            }
-          }
-        ]
-      })
-    ],
+
+    // The vite plugin used by the project. The quantity is large, so it is separately extracted and managed
+    plugins: createVitePlugins(isBuild),
+
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src')
