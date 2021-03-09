@@ -1,7 +1,7 @@
-import { UserConfigExport } from "vite";
-import styleImport from "vite-plugin-style-import";
-import vue from "@vitejs/plugin-vue";
-import path from "path";
+import { UserConfigExport } from 'vite';
+import styleImport from 'vite-plugin-style-import';
+import vue from '@vitejs/plugin-vue';
+import path from 'path';
 
 // https://vitejs.dev/config/
 export default (): UserConfigExport => {
@@ -9,28 +9,28 @@ export default (): UserConfigExport => {
     css: {
       preprocessorOptions: {
         less: {
-          javascriptEnabled: true,
-        },
-      },
+          javascriptEnabled: true
+        }
+      }
     },
     plugins: [
       vue(),
       styleImport({
         libs: [
           {
-            libraryName: "vant",
+            libraryName: 'vant',
             esModule: true,
             resolveStyle: (name) => {
               return `vant/es/${name}/style/index`;
-            },
-          },
-        ],
-      }),
+            }
+          }
+        ]
+      })
     ],
     resolve: {
       alias: {
-        "@": path.resolve(__dirname, "./src"),
-      },
-    },
+        '@': path.resolve(__dirname, './src')
+      }
+    }
   };
 };

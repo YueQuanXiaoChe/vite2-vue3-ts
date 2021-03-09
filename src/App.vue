@@ -1,25 +1,25 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
   <div>
-    <van-button type="primary" @click="goToLogin" class="test-button"
-      >Login</van-button
-    >
-    <van-button type="primary" @click="goToHome" class="test-button"
-      >Home</van-button
-    >
-    <van-button type="primary" @click="goToWelcome" class="test-button"
-      >Welcome</van-button
-    >
-    <van-button type="primary" @click="goToDemo" class="test-button"
-      >Demo</van-button
-    >
+    <van-button type="primary" @click="goToLogin" class="test-button">
+      Login
+    </van-button>
+    <van-button type="primary" @click="goToHome" class="test-button">
+      Home
+    </van-button>
+    <van-button type="primary" @click="goToWelcome" class="test-button">
+      Welcome
+    </van-button>
+    <van-button type="primary" @click="goToDemo" class="test-button">
+      Demo
+    </van-button>
   </div>
   <router-view></router-view>
   <div>
     Count: {{ $store.state.count }}
-    <van-button type="primary" @click="increment" class="test-button"
-      >Add</van-button
-    >
+    <van-button type="primary" @click="increment" class="test-button">
+      Add
+    </van-button>
   </div>
   <div class="test-viewport">测试转换</div>
   <van-field v-model="value"></van-field>
@@ -31,41 +31,41 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import { useRouter } from "vue-router";
-import { useStore } from "vuex";
-import { Button, Field } from "vant";
-import "vant/es/button/style/index";
-import "vant/es/field/style/index";
+import { defineComponent, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+import { Button, Field } from 'vant';
+import 'vant/es/button/style/index';
+import 'vant/es/field/style/index';
 
 export default defineComponent({
-  name: "App",
+  name: 'App',
   components: {
     [Button.name]: Button,
-    [Field.name]: Field,
+    [Field.name]: Field
   },
   setup() {
     const router = useRouter();
     const goToLogin = () => {
-      router.push("/");
+      router.push('/');
     };
     const goToHome = () => {
-      router.push("/home");
+      router.push('/home');
     };
     const goToWelcome = () => {
-      router.push("/home/welcome");
+      router.push('/home/welcome');
     };
     const goToDemo = () => {
-      router.push("/demo");
+      router.push('/demo');
     };
 
     const store = useStore();
     const increment = () => {
-      store.commit("increment");
+      store.commit('increment');
     };
 
     const show = ref(true);
-    const value = ref("asd");
+    const value = ref('asd');
 
     return {
       goToLogin,
@@ -74,12 +74,12 @@ export default defineComponent({
       increment,
       goToDemo,
       show,
-      value,
+      value
     };
-  },
+  }
 });
 </script>
 
 <style lang="less" scoped>
-@import "@/design/app.less";
+@import '@/design/app.less';
 </style>

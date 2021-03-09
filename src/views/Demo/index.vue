@@ -5,13 +5,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import { Button } from "vant";
-import "vant/es/button/style/index";
+import { defineComponent } from 'vue';
+import { Button } from 'vant';
+import 'vant/es/button/style/index';
 
 export default defineComponent({
   components: {
-    [Button.name]: Button,
-  },
+    [Button.name]: Button
+  }
 });
 </script>
