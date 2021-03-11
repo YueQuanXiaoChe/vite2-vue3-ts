@@ -18,11 +18,11 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
   console.log(
     '-------------------- vite.config.js log start --------------------'
   );
+  console.log('root ---->', root);
   console.log('command ---->', command);
+  console.log('mode ---->', mode);
   console.log('isBuild ---->', isBuild);
   console.log('buildEnv ---->', buildEnv);
-  console.log('mode ---->', mode);
-  console.log('root ---->', root);
   console.log('env ---->', env);
   console.log('viteEnv ---->', viteEnv);
   console.log(
