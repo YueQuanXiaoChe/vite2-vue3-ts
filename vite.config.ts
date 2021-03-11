@@ -29,9 +29,10 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     '-------------------- vite.config.js log end --------------------'
   );
 
-  const { VITE_DROP_CONSOLE } = viteEnv;
+  const { VITE_PORT, VITE_PUBLIC_PATH, VITE_DROP_CONSOLE } = viteEnv;
 
   return {
+    base: VITE_PUBLIC_PATH,
     root,
     resolve: {
       alias: {
@@ -39,6 +40,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       }
     },
     server: {
+      port: VITE_PORT,
       open: true
     },
 
@@ -50,7 +52,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
           drop_console: VITE_DROP_CONSOLE
         }
       },
-      // Turning off brotliSize display can slightly reduce packaging time
+      // 启用/禁用 brotli 压缩大小报告。压缩大型输出文件可能会很慢，因此禁用该功能可能会提高大型项目的构建性能。
       brotliSize: false
     },
 

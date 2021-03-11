@@ -3,13 +3,14 @@ import type { ViteEnv } from '../../utils';
 
 import vue from '@vitejs/plugin-vue';
 
+import { configHtmlPlugin } from './html';
+import { configCompressPlugin } from './compress';
 import { configStyleImportPlugin } from './styleImport';
 import { configVisualizerConfig } from './visualizer';
-import { configCompressPlugin } from './compress';
-import { configHtmlPlugin } from './html';
+import { configImageminPlugin } from './imagemin';
 
 export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
-  const { VITE_BUILD_COMPRESS } = viteEnv;
+  const { VITE_USE_IMAGEMIN, VITE_BUILD_COMPRESS } = viteEnv;
 
   const vitePlugins: (Plugin | Plugin[])[] = [
     // have to
@@ -26,6 +27,9 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   vitePlugins.push(configVisualizerConfig());
 
   if (isBuild) {
+    //vite-plugin-imagemin
+    VITE_USE_IMAGEMIN && vitePlugins.push(configImageminPlugin());
+
     // rollup-plugin-gzip
     vitePlugins.push(configCompressPlugin(VITE_BUILD_COMPRESS));
   }

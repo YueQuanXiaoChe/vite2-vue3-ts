@@ -36,6 +36,11 @@
     "vite": "^2.0.1",
     "vite-plugin-compression": "^0.2.3",
     "vite-plugin-html": "^2.0.3",
+    "vite-plugin-imagemin": "^0.2.9",
     "vite-plugin-style-import": "^0.7.6"
+  },
+  "resolutions": {
+    "//": "Used to install imagemin dependencies, because imagemin may not be installed in China.If it is abroad, you can delete it",
+    "bin-wrapper": "npm:bin-wrapper-china"
   }
 }
