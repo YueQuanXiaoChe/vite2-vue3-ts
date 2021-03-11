@@ -29,7 +29,31 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     '-------------------- vite.config.js log end --------------------'
   );
 
+  const { VITE_DROP_CONSOLE } = viteEnv;
+
   return {
+    root,
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, './src')
+      }
+    },
+    server: {
+      open: true
+    },
+
+    build: {
+      terserOptions: {
+        compress: {
+          keep_infinity: true,
+          // Used to delete console in production environment
+          drop_console: VITE_DROP_CONSOLE
+        }
+      },
+      // Turning off brotliSize display can slightly reduce packaging time
+      brotliSize: false
+    },
+
     css: {
       preprocessorOptions: {
         less: {
@@ -39,12 +63,6 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     },
 
     // 项目使用的vite插件。数量大，单独提取管理
-    plugins: createVitePlugins(viteEnv, isBuild),
-
-    resolve: {
-      alias: {
-        '@': path.resolve(__dirname, './src')
-      }
-    }
+    plugins: createVitePlugins(viteEnv, isBuild)
   };
 };

@@ -67,6 +67,10 @@ export default defineComponent({
     const show = ref(true);
     const value = ref('asd');
 
+    console.log(
+      'Test whether the environment variable VITE_DROP_CONSOLE is valid!'
+    );
+
     return {
       goToLogin,
       goToHome,
