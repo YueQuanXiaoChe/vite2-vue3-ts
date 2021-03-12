@@ -5,6 +5,9 @@ export function isReportMode(): boolean {
   return process.env.REPORT === 'true';
 }
 
+/**
+ * 获取构建环境
+ */
 export function getBuildEnv(): string | undefined {
   return process.env.BUILD_ENV;
 }
@@ -23,7 +26,9 @@ export interface ViteEnv {
   VITE_USE_IMAGEMIN: boolean;
 }
 
-// 将所有环境变量配置文件读取到 process.env
+/**
+ * 将所有环境变量配置文件读取到 process.env
+ */
 export function wrapperEnv(envConf: Recordable): ViteEnv {
   const ret: any = {};
 
