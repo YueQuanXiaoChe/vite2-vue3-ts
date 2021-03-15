@@ -28,6 +28,13 @@
     <div>bbb</div>
     <div>ccc</div>
   </div>
+  <!-- 单色 iconfont 图标 -->
+  <i class="iconfont iconic_zujianguanli" />
+  <i class="iconfont iconic_search" />
+  <!-- 多色色 iconfont 图标 -->
+  <svg class="icon" aria-hidden="true">
+    <use xlink:href="#iconkongzhitai"></use>
+  </svg>
 </template>
 
 <script lang="ts">
@@ -84,6 +91,14 @@ export default defineComponent({
 });
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 @import '@/design/app.less';
+
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
 </style>
