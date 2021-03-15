@@ -2,27 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- 强制Chromium内核，作用于360浏览器、QQ浏览器等国产双核浏览器 -->
-    <meta name="renderer" content="webkit"/>
-    <!-- 强制Chromium内核，作用于其他双核浏览器 -->
-    <meta name="force-rendering" content="webkit"/>
-    <!-- 如果有安装 Google Chrome Frame 插件则强制为Chromium内核，否则强制本机支持的最高版本IE内核，作用于IE浏览器 -->
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover" />
     <link rel="icon" href="/favicon.ico" />
     <title><%= title %></title>
-    <!-- [icontfont] font-class引用，只支持单色 -->
-    <!-- 预加载外部样式表 -->
-    <link href="https://at.alicdn.com/t/font_1700262_4p69bg9gl8k.css" rel="preload" as="style">
-    <!-- 定义外部加载的样式表 -->
-    <link href="https://at.alicdn.com/t/font_1700262_4p69bg9gl8k.css" rel="stylesheet">
-    <!-- [icontfont] symbol引用，支持多色 -->
-    <!-- 预加载外部js -->
-    <link href="https://at.alicdn.com/t/font_1700262_4p69bg9gl8k.js" rel="preload" as="script">
   </head>
   <body>
     <div id="app"></div>
-    <script src="https://at.alicdn.com/t/font_1700262_4p69bg9gl8k.js"></script>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
