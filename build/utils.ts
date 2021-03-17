@@ -1,3 +1,5 @@
+import path from 'path';
+
 /**
  * Whether to generate package preview
  */
@@ -20,10 +22,10 @@ export interface ViteEnv {
   VITE_BUILD_COMPRESS: 'gzip' | 'brotli' | 'none';
   VITE_GLOB_APP_TITLE: string;
   VITE_GLOB_APP_SHORT_NAME: string;
-  VITE_USE_PWA: boolean;
   VITE_USE_CDN: boolean;
   VITE_LEGACY: boolean;
   VITE_USE_IMAGEMIN: boolean;
+  VITE_USE_SOURCEMAP: boolean;
 }
 
 /**
@@ -34,8 +36,7 @@ export function wrapperEnv(envConf: Recordable): ViteEnv {
 
   for (const envName of Object.keys(envConf)) {
     let realName = envConf[envName].replace(/\\n/g, '\n');
-    realName =
-      realName === 'true' ? true : realName === 'false' ? false : realName;
+    realName = realName === 'true' ? true : realName === 'false' ? false : realName;
 
     if (envName === 'VITE_PORT') {
       realName = Number(realName);
@@ -49,4 +50,8 @@ export function wrapperEnv(envConf: Recordable): ViteEnv {
     process.env[envName] = realName;
   }
   return ret;
+}
+
+export function pathResolve(dir: string): string {
+  return path.resolve(__dirname, '.', dir);
 }
