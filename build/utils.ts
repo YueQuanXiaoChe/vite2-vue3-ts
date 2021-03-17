@@ -23,7 +23,6 @@ export interface ViteEnv {
   VITE_GLOB_APP_TITLE: string;
   VITE_GLOB_APP_SHORT_NAME: string;
   VITE_USE_CDN: boolean;
-  VITE_LEGACY: boolean;
   VITE_USE_IMAGEMIN: boolean;
   VITE_USE_SOURCEMAP: boolean;
 }
