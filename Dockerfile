@@ -3,7 +3,7 @@ FROM node:14.16.0-alpine as build
 ARG ENV=''
 WORKDIR /usr/src/app
 COPY ["package.json", "package-lock.json", "/usr/src/app/"]
-# RUN npm config set registry http://192.168.4.59:8081/repository/npm-all-jszx/
+RUN npm config set registry http://192.168.4.59:8081/repository/npm-all-jszx/
 RUN npm install --silent
 COPY . .
 RUN npm run build:${ENV}
