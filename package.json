@@ -5,12 +5,26 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
+
     "report": "cross-env REPORT=true BUILD_ENV=dev npm run build",
-    "build:dev": "cross-env BUILD_ENV=dev npm run build",
-    "build:test": "cross-env BUILD_ENV=test npm run build",
+
+    "build:dev":    "cross-env BUILD_ENV=dev    npm run build",
+    "build:test":   "cross-env BUILD_ENV=test   npm run build",
     "build:stress": "cross-env BUILD_ENV=stress npm run build",
-    "build:pre": "cross-env BUILD_ENV=pre npm run build",
-    "build:prod": "cross-env BUILD_ENV=prod npm run build"
+    "build:pre":    "cross-env BUILD_ENV=pre    npm run build",
+    "build:prod":   "cross-env BUILD_ENV=prod   npm run build",
+
+    "docker-build:dev":    "docker build --build-arg ENV=dev .    -t tcsl-mobile-app-dev",
+    "docker-build:test":   "docker build --build-arg ENV=test .   -t tcsl-mobile-app-test",
+    "docker-build:stress": "docker build --build-arg ENV=stress . -t tcsl-mobile-app-stress",
+    "docker-build:pre":    "docker build --build-arg ENV=pre .    -t tcsl-mobile-app-pre",
+    "docker-build:prod":   "docker build --build-arg ENV=prod .   -t tcsl-mobile-app-prod",
+
+    "docker-run:dev":    "npm run docker-build:dev    && docker run -d -p 3000:80 tcsl-mobile-app-dev",
+    "docker-run:test":   "npm run docker-build:test   && docker run -d -p 3000:80 tcsl-mobile-app-test",
+    "docker-run:stress": "npm run docker-build:stress && docker run -d -p 3000:80 tcsl-mobile-app-stress",
+    "docker-run:pre":    "npm run docker-build:pre    && docker run -d -p 3000:80 tcsl-mobile-app-pre",
+    "docker-run:prod":   "npm run docker-build:prod   && docker run -d -p 3000:80 tcsl-mobile-app-prod"
   },
   "dependencies": {
     "axios": "^0.21.1",

@@ -25,6 +25,7 @@ export interface ViteEnv {
   VITE_USE_CDN: boolean;
   VITE_USE_IMAGEMIN: boolean;
   VITE_USE_SOURCEMAP: boolean;
+  VITE_APP_ENV: 'dev' | 'test' | 'stress' | 'pre' | 'prod';
 }
 
 /**
