@@ -1,7 +1,7 @@
-export const timestamp = () => +Date.now();
+export const timestamp = (): number => +Date.now();
 import { isObject } from '@/utils/is';
 
-export const now = () => Date.now();
+export const now = (): number => Date.now();
 
 /**
  * Add the object as a parameter to the URL

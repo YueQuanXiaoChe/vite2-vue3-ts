@@ -5,7 +5,7 @@
  * @param   String  color   十六进制颜色值
  * @return  Boolean
  */
-export function isHexColor(color: string) {
+export function isHexColor(color: string): boolean {
   const reg = /^#([0-9a-fA-F]{3}|[0-9a-fA-f]{6})$/;
   return reg.test(color);
 }
@@ -19,7 +19,7 @@ export function isHexColor(color: string) {
  * @param g
  * @param b
  */
-export function rgbToHex(r: number, g: number, b: number) {
+export function rgbToHex(r: number, g: number, b: number): string {
   // tslint:disable-next-line:no-bitwise
   const hex = ((r << 16) | (g << 8) | b).toString(16);
   return '#' + new Array(Math.abs(hex.length - 7)).join('0') + hex;
@@ -30,7 +30,7 @@ export function rgbToHex(r: number, g: number, b: number) {
  * @param {string} hex The color to transform
  * @returns The RGB representation of the passed color
  */
-export function hexToRGB(hex: string) {
+export function hexToRGB(hex: string): string {
   let sHex = hex.toLowerCase();
   if (isHexColor(hex)) {
     if (sHex.length === 4) {
@@ -49,8 +49,8 @@ export function hexToRGB(hex: string) {
   return sHex;
 }
 
-export function colorIsDark(color: string) {
-  if (!isHexColor(color)) return;
+export function colorIsDark(color: string): boolean {
+  if (!isHexColor(color)) return false;
   const [r, g, b] = hexToRGB(color)
     .replace(/(?:\(|\)|rgb|RGB)*/g, '')
     .split(',')
@@ -64,7 +64,7 @@ export function colorIsDark(color: string) {
  * @param {number} amount The amount to change the color by
  * @returns {string} The HEX representation of the processed color
  */
-export function darken(color: string, amount: number) {
+export function darken(color: string, amount: number): string {
   color = color.indexOf('#') >= 0 ? color.substring(1, color.length) : color;
   amount = Math.trunc((255 * amount) / 100);
   return `#${subtractLight(color.substring(0, 2), amount)}${subtractLight(
@@ -79,7 +79,7 @@ export function darken(color: string, amount: number) {
  * @param {number} amount The amount to change the color by
  * @returns {string} The processed color represented as HEX
  */
-export function lighten(color: string, amount: number) {
+export function lighten(color: string, amount: number): string {
   color = color.indexOf('#') >= 0 ? color.substring(1, color.length) : color;
   amount = Math.trunc((255 * amount) / 100);
   return `#${addLight(color.substring(0, 2), amount)}${addLight(
@@ -131,7 +131,7 @@ function contrast(rgb1: string[], rgb2: number[]) {
  * Determines what the best text color is (black or white) based con the contrast with the background
  * @param hexColor - Last selected color by the user
  */
-export function calculateBestTextColor(hexColor: string) {
+export function calculateBestTextColor(hexColor: string): string {
   const rgbColor = hexToRGB(hexColor.substring(1));
   const contrastWithBlack = contrast(rgbColor.split(','), [0, 0, 0]);
 

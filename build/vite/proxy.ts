@@ -7,10 +7,7 @@ type ProxyItem = [string, string];
 
 type ProxyList = ProxyItem[];
 
-type ProxyTargetList = Record<
-  string,
-  ServerOptions & { rewrite: (path: string) => string }
->;
+type ProxyTargetList = Record<string, ServerOptions & { rewrite: (path: string) => string }>;
 
 const httpsRE = /^https:\/\//;
 

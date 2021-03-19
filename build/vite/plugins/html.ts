@@ -16,11 +16,7 @@ export function configHtmlPlugin(env: ViteEnv, isBuild: boolean) {
 
   const isMinify = (): boolean => {
     let res = false;
-    if (
-      isBuild &&
-      ['dev', 'test', 'develop', 'production', undefined].indexOf(buildEnv) ===
-        -1
-    ) {
+    if (isBuild && ['dev', 'test', 'develop', 'production', undefined].indexOf(buildEnv) === -1) {
       res = true;
     }
     return res;

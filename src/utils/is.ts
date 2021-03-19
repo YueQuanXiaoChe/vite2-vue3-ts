@@ -1,6 +1,6 @@
 const toString = Object.prototype.toString;
 
-export function is(val: unknown, type: string) {
+export function is(val: unknown, type: string): boolean {
   return toString.call(val) === `[object ${type}]`;
 }
 
@@ -53,12 +53,7 @@ export function isNumber(val: unknown): val is number {
 }
 
 export function isPromise<T = any>(val: unknown): val is Promise<T> {
-  return (
-    is(val, 'Promise') &&
-    isObject(val) &&
-    isFunction(val.then) &&
-    isFunction(val.catch)
-  );
+  return is(val, 'Promise') && isObject(val) && isFunction(val.then) && isFunction(val.catch);
 }
 
 export function isString(val: unknown): val is string {
