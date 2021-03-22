@@ -1,12 +1,16 @@
 module.exports = {
+  // 禁用持续查找
+  // 默认情况下，ESLint将在根目录下的所有父文件夹中查找配置文件
+  // 该属性的作用是一旦发现了配置文件就停止对父文件夹的查找
   root: true,
+  // 环境配置
   env: {
     browser: true,
     es2021: true,
     node: true
   },
-  parser: 'vue-eslint-parser',
   // 解析器
+  parser: 'vue-eslint-parser',
   parserOptions: {
     // 指定使用的 ECMAScript 版本
     ecmaVersion: 12,
@@ -27,7 +31,9 @@ module.exports = {
     'prettier',
     'plugin:prettier/recommended'
   ],
+  // 插件
   plugins: ['vue', '@typescript-eslint'],
+  // 校验规则
   // eslint规则表：http://eslint.cn/docs/rules/
   // typescript-eslint 规则表：https://www.npmjs.com/package/@typescript-eslint/eslint-plugin
   // eslint-plugin-vue 规则表：https://eslint.vuejs.org/rules/
