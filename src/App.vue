@@ -34,6 +34,7 @@ import { useStore } from 'vuex';
 import { Button, Field } from 'vant';
 import 'vant/es/button/style/index';
 import 'vant/es/field/style/index';
+import { defHttp } from '@/utils/http/axios';
 
 export default defineComponent({
   name: 'App',
@@ -65,6 +66,25 @@ export default defineComponent({
     const value = ref('asd');
 
     console.log('Test whether the environment variable VITE_DROP_CONSOLE is valid!');
+    console.log(defHttp);
+    let result: Promise<any> = defHttp.request({
+      url: 'bp/sys/login',
+      method: 'POST',
+      data: {
+        username: '18622084468',
+        password: 'aa123456'
+      }
+    });
+    console.log('result ---->', result);
+
+    let postResult: Promise<any> = defHttp.post({
+      url: 'bp/sys/login',
+      data: {
+        // username: '18622084468',
+        password: 'aa123456'
+      }
+    });
+    console.log('postResult ---->', postResult);
 
     return {
       goToLogin,
