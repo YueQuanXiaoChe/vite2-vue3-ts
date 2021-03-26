@@ -25,6 +25,26 @@
   <svg class="icon" aria-hidden="true">
     <use xlink:href="#iconkongzhitai" />
   </svg>
+
+  <div>
+    <!-- 打开微信 -->
+    <a href="weixin://">打开微信</a>
+  </div>
+
+  <div>
+    <!-- 打开支付宝 -->
+    <a href="alipays://">打开支付宝</a>
+  </div>
+
+  <div>
+    <!-- 打开支付宝的扫一扫 -->
+    <a href="alipays://platformapi/startapp?saId=10000007">打开支付宝的扫一扫</a>
+  </div>
+
+  <div>
+    <!-- 打开支付宝的蚂蚁森林 -->
+    <a href="alipays://platformapi/startapp?appId=60000002">打开支付宝的蚂蚁森林</a>
+  </div>
 </template>
 
 <script lang="ts">
