@@ -3,11 +3,11 @@
  * @Description:
  */
 module.exports = {
-  printWidth: 100, // 超过最大值换行
-  tabWidth: 2, // 缩进字节数
-  useTabs: false, // 缩进不使用tab，使用空格
+  printWidth: 100, // 一行的字符数，如果超过会进行换行，默认为 80
+  tabWidth: 2, // 一个tab代表几个空格数
+  useTabs: false, // 是否使用 tab 进行缩进，默认为 false，表示用空格进行缩减
   semi: true, // 句尾添加分号
-  singleQuote: true, // 使用单引号代替双引号
+  singleQuote: true, // 字符串是否使用单引号，默认为 false，使用双引号
   proseWrap: 'preserve', // 默认值。因为使用了一些折行敏感型的渲染器（如GitHub comment）而按照markdown文本样式进行折行
   quoteProps: 'as-needed', // 仅在需要时在对象属性周围添加引号
   trailingComma: 'none', // 多行时是否添加尾随逗号

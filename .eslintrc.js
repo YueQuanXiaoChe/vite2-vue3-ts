@@ -11,12 +11,11 @@ module.exports = {
   },
   // 解析器
   parser: 'vue-eslint-parser',
+  // 解析器配置选项
   parserOptions: {
-    // 指定使用的 ECMAScript 版本
-    ecmaVersion: 12,
+    ecmaVersion: 12, // 指定使用的 ECMAScript 版本
     parser: '@typescript-eslint/parser',
-    // 设置为 "script" (默认)或 "module"（如果你的代码是 ECMAScript 模块)
-    sourceType: 'module',
+    sourceType: 'module', // 代码支持es6，使用 module
     jsxPragma: 'React',
     // 额外的语言特性
     ecmaFeatures: {
@@ -24,7 +23,7 @@ module.exports = {
       tsx: true
     }
   },
-  // 启用一系列核心规则，这些规则报告一些常见问题
+  // 拓展（启用一系列核心规则，这些规则报告一些常见问题）
   extends: [
     'plugin:vue/vue3-recommended',
     'plugin:@typescript-eslint/recommended',
