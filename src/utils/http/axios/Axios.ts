@@ -1,11 +1,14 @@
-import type { AxiosRequestConfig, AxiosInstance, AxiosResponse } from 'axios';
+import type { AxiosRequestConfig, AxiosInstance, AxiosResponse, Canceler } from 'axios';
 import axios from 'axios';
+import { AxiosCancel } from './AxiosCancel';
 // import { cloneDeep } from 'lodash-es';
 // import qs from 'qs';
 
 export class Axios {
   private axiosInstance: AxiosInstance;
   private options: AxiosRequestConfig;
+  // 存储每个请求的标识和取消的函数
+  endingMap: Map<string, Canceler> = new Map<string, Canceler>();
 
   constructor(options: AxiosRequestConfig) {
     this.options = options;
@@ -14,6 +17,7 @@ export class Axios {
   }
 
   private setupInterceptors() {
+    const axiosCancel = new AxiosCancel();
     // 添加请求拦截器
     this.axiosInstance.interceptors.request.use(
       (config: AxiosRequestConfig) => {
@@ -24,6 +28,7 @@ export class Axios {
             'Tcsl-Loongboss-Token': userToken
           };
         }
+        axiosCancel.addPending(config);
         return config;
       },
       (error: Error) => {
@@ -33,10 +38,11 @@ export class Axios {
     );
     // 添加响应拦截器
     this.axiosInstance.interceptors.response.use(
-      (response: AxiosResponse<any>) => {
+      (res: AxiosResponse<any>) => {
+        axiosCancel.removePending(res.config);
         // 对响应数据做点什么
-        console.log('response ---->', response);
-        return response;
+        console.log('response ---->', res);
+        return res;
       },
       (error: Error) => {
         // 对响应错误做点什么

@@ -27,22 +27,24 @@
   </svg>
 
   <div>
-    <!-- 打开微信 -->
     <a href="weixin://">打开微信</a>
   </div>
-
   <div>
-    <!-- 打开支付宝 -->
+    <a href="weixin://dl/business/?ticket=tcd3fdada4b2b7758ab95eb5b82943bab">腾讯客服</a>
+  </div>
+  <div>
+    <a href="weixin://dl/business/?ticket=t214ed431bc5b8ba0ac03f4f14a420cf7">腾讯客服</a>
+  </div>
+  <div>
+    <a href="weixin://dl/business/?ticket=tc0c5e67926d042fa534d895ab808207e">腾讯客服</a>
+  </div>
+  <div>
     <a href="alipays://">打开支付宝</a>
   </div>
-
   <div>
-    <!-- 打开支付宝的扫一扫 -->
     <a href="alipays://platformapi/startapp?saId=10000007">打开支付宝的扫一扫</a>
   </div>
-
   <div>
-    <!-- 打开支付宝的蚂蚁森林 -->
     <a href="alipays://platformapi/startapp?appId=60000002">打开支付宝的蚂蚁森林</a>
   </div>
 </template>
@@ -85,8 +87,8 @@ export default defineComponent({
     const show = ref(true);
     const value = ref('asd');
 
-    console.log('Test whether the environment variable VITE_DROP_CONSOLE is valid!');
-    console.log(defHttp);
+    // console.log('Test whether the environment variable VITE_DROP_CONSOLE is valid!');
+    // console.log(defHttp);
     let result: Promise<any> = defHttp.request({
       url: 'bp/sys/login',
       method: 'POST',
@@ -95,7 +97,7 @@ export default defineComponent({
         password: 'aa123456'
       }
     });
-    console.log('result ---->', result);
+    // console.log('result ---->', result);
 
     let postResult: Promise<any> = defHttp.post({
       url: 'bp/sys/login',
@@ -104,7 +106,17 @@ export default defineComponent({
         password: 'aa123456'
       }
     });
-    console.log('postResult ---->', postResult);
+    // console.log('postResult ---->', postResult);
+
+    setTimeout(() => {
+      let pr: Promise<any> = defHttp.post({
+        url: 'bp/sys/login',
+        data: {
+          username: '18622084468'
+          // password: 'aa123456'
+        }
+      });
+    }, 1000);
 
     return {
       goToLogin,
