@@ -95,6 +95,9 @@ export default defineComponent({
       data: {
         username: '18622084468',
         password: 'aa123456'
+      },
+      headers: {
+        ignoreCancelToken: false
       }
     });
     // console.log('result ---->', result);

@@ -1,16 +1,17 @@
 import type { AxiosRequestConfig, AxiosInstance, AxiosResponse, Canceler } from 'axios';
 import axios from 'axios';
 import { AxiosCancel } from './AxiosCancel';
+import { CreateAxiosOptions } from './AxiosTransform';
 // import { cloneDeep } from 'lodash-es';
 // import qs from 'qs';
 
 export class Axios {
   private axiosInstance: AxiosInstance;
-  private options: AxiosRequestConfig;
+  private options: CreateAxiosOptions;
   // 存储每个请求的标识和取消的函数
   endingMap: Map<string, Canceler> = new Map<string, Canceler>();
 
-  constructor(options: AxiosRequestConfig) {
+  constructor(options: CreateAxiosOptions) {
     this.options = options;
     this.axiosInstance = axios.create(options);
     this.setupInterceptors();
@@ -28,7 +29,18 @@ export class Axios {
             'Tcsl-Loongboss-Token': userToken
           };
         }
-        axiosCancel.addPending(config);
+
+        // 如果每次请求的 headers 中有 ignoreCancelToken 标识则使用这个标识
+        // 否则使用 options.requestOptions 中的 ignoreCancelToken 标识
+        const ignoreCancelToken = config.headers.ignoreCancelToken;
+        console.log('ignoreCancelToken ---->', ignoreCancelToken);
+        const ignoreCancel =
+          ignoreCancelToken !== undefined
+            ? ignoreCancelToken
+            : this.options.requestOptions?.ignoreCancelToken;
+        console.log('ignoreCancel ---->', ignoreCancel);
+
+        !ignoreCancel && axiosCancel.addPending(config);
         return config;
       },
       (error: Error) => {
@@ -59,7 +71,7 @@ export class Axios {
     return this.axiosInstance;
   }
 
-  reconfigAxios(options: AxiosRequestConfig) {
+  reconfigAxios(options: CreateAxiosOptions) {
     if (!this.axiosInstance) {
       return;
     }
