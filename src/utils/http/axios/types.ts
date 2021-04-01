@@ -18,3 +18,10 @@ export interface RequestOptions {
   // 忽略重复请求
   ignoreCancelToken?: boolean;
 }
+
+export interface Result<T = any> {
+  code: string;
+  data: T;
+  msg: string;
+  success: boolean;
+}

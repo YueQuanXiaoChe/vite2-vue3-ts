@@ -87,9 +87,7 @@ export default defineComponent({
     const show = ref(true);
     const value = ref('asd');
 
-    // console.log('Test whether the environment variable VITE_DROP_CONSOLE is valid!');
-    // console.log(defHttp);
-    let result: Promise<any> = defHttp.request({
+    defHttp.request({
       url: 'bp/sys/login',
       method: 'POST',
       data: {
@@ -100,19 +98,17 @@ export default defineComponent({
         ignoreCancelToken: false
       }
     });
-    // console.log('result ---->', result);
 
-    let postResult: Promise<any> = defHttp.post({
+    defHttp.post({
       url: 'bp/sys/login',
       data: {
         // username: '18622084468',
         password: 'aa123456'
       }
     });
-    // console.log('postResult ---->', postResult);
 
     setTimeout(() => {
-      let pr: Promise<any> = defHttp.post({
+      defHttp.post({
         url: 'bp/sys/login',
         data: {
           username: '18622084468'

@@ -1,21 +1,48 @@
-import type { AxiosRequestConfig, AxiosInstance, AxiosResponse, Canceler } from 'axios';
+import type { AxiosRequestConfig, AxiosInstance, AxiosResponse } from 'axios';
 import axios from 'axios';
 import { AxiosCancel } from './AxiosCancel';
 import { CreateAxiosOptions } from './AxiosTransform';
 import { isFunction } from '@/utils/is';
+import { Result } from './types';
 // import { cloneDeep } from 'lodash-es';
 // import qs from 'qs';
 
 export class Axios {
   private axiosInstance: AxiosInstance;
   private options: CreateAxiosOptions;
-  // 存储每个请求的标识和取消的函数
-  endingMap: Map<string, Canceler> = new Map<string, Canceler>();
 
   constructor(options: CreateAxiosOptions) {
     this.options = options;
     this.axiosInstance = axios.create(options);
     this.setupInterceptors();
+  }
+
+  private getTransform() {
+    const { transform } = this.options;
+    return transform;
+  }
+
+  getAxios(): AxiosInstance {
+    return this.axiosInstance;
+  }
+
+  reconfigAxios(options: CreateAxiosOptions) {
+    if (!this.axiosInstance) {
+      return;
+    }
+    this.options = options;
+    this.axiosInstance = axios.create(options);
+  }
+
+  setHeader(headers: any): void {
+    if (!this.axiosInstance) {
+      return;
+    }
+    Object.assign(this.axiosInstance.defaults.headers, headers);
+  }
+
+  getOptions() {
+    return this.options;
   }
 
   private setupInterceptors() {
@@ -75,43 +102,17 @@ export class Axios {
       this.axiosInstance.interceptors.response.use(undefined, responseInterceptorsCatch);
   }
 
-  getOptions() {
-    return this.options;
-  }
-
-  private getTransform() {
-    const { transform } = this.options;
-    return transform;
-  }
-
-  getAxios(): AxiosInstance {
-    return this.axiosInstance;
-  }
-
-  reconfigAxios(options: CreateAxiosOptions) {
-    if (!this.axiosInstance) {
-      return;
-    }
-    this.options = options;
-    this.axiosInstance = axios.create(options);
-  }
-
-  setHeader(headers: any): void {
-    if (!this.axiosInstance) {
-      return;
-    }
-    Object.assign(this.axiosInstance.defaults.headers, headers);
-  }
-
   request<T = any>(config: AxiosRequestConfig): Promise<T> {
-    const p: Promise<T> = this.axiosInstance.request(config);
-    p.then((res: T) => {
-      console.log('res ---->', res);
+    return new Promise((resolve, reject) => {
+      this.axiosInstance
+        .request<any, AxiosResponse<Result>>(config)
+        .then((res: AxiosResponse<Result>) => {
+          resolve((res as unknown) as Promise<T>);
+        })
+        .catch((e: Error) => {
+          reject(e);
+        });
     });
-    p.catch((err: Error) => {
-      console.log('err ---->', err);
-    });
-    return p;
   }
 
   get<T = any>(config: AxiosRequestConfig): Promise<T> {
