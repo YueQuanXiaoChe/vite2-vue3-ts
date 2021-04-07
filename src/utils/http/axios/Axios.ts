@@ -1,10 +1,11 @@
 import type { AxiosRequestConfig, AxiosInstance, AxiosResponse } from 'axios';
 import axios from 'axios';
 import { AxiosCancel } from './AxiosCancel';
-import { CreateAxiosOptions } from './AxiosTransform';
+import { AxiosTransform, CreateAxiosOptions } from './AxiosTransform';
 import { isFunction } from '@/utils/is';
-import { Result } from './types';
-// import { cloneDeep } from 'lodash-es';
+import { RequestOptions, Result } from './types';
+import { cloneDeep } from 'lodash-es';
+import { ERROR_RESULT } from './const';
 // import qs from 'qs';
 
 export class Axios {
@@ -17,7 +18,7 @@ export class Axios {
     this.setupInterceptors();
   }
 
-  private getTransform() {
+  private getTransform(): AxiosTransform | undefined {
     const { transform } = this.options;
     return transform;
   }
@@ -26,7 +27,7 @@ export class Axios {
     return this.axiosInstance;
   }
 
-  reconfigAxios(options: CreateAxiosOptions) {
+  reconfigAxios(options: CreateAxiosOptions): void {
     if (!this.axiosInstance) {
       return;
     }
@@ -41,11 +42,11 @@ export class Axios {
     Object.assign(this.axiosInstance.defaults.headers, headers);
   }
 
-  getOptions() {
+  getOptions(): CreateAxiosOptions {
     return this.options;
   }
 
-  private setupInterceptors() {
+  private setupInterceptors(): void {
     // 请求、响应操作的各种拦截器
     const transform = this.getTransform();
     if (!transform) {
@@ -102,32 +103,49 @@ export class Axios {
       this.axiosInstance.interceptors.response.use(undefined, responseInterceptorsCatch);
   }
 
-  request<T = any>(config: AxiosRequestConfig): Promise<T> {
+  request<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
+    const conf: AxiosRequestConfig = cloneDeep(config);
+
+    const { requestOptions } = this.options;
+
+    const opt: RequestOptions = Object.assign({}, requestOptions, options);
+
+    const { requestCatchHook, transformRequestHook } = this.getTransform() || {};
+
     return new Promise((resolve, reject) => {
       this.axiosInstance
-        .request<any, AxiosResponse<Result>>(config)
+        .request<any, AxiosResponse<Result>>(conf)
         .then((res: AxiosResponse<Result>) => {
+          if (transformRequestHook && isFunction(transformRequestHook)) {
+            const ret = transformRequestHook(res, opt);
+            ret !== ERROR_RESULT ? resolve(ret) : reject(new Error('request error!'));
+            return;
+          }
           resolve((res as unknown) as Promise<T>);
         })
         .catch((e: Error) => {
+          if (requestCatchHook && isFunction(requestCatchHook)) {
+            reject(requestCatchHook(e));
+            return;
+          }
           reject(e);
         });
     });
   }
 
-  get<T = any>(config: AxiosRequestConfig): Promise<T> {
-    return this.request({ ...config, method: 'GET' });
+  get<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
+    return this.request({ ...config, method: 'GET' }, options);
   }
 
-  post<T = any>(config: AxiosRequestConfig): Promise<T> {
-    return this.request({ ...config, method: 'POST' });
+  post<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
+    return this.request({ ...config, method: 'POST' }, options);
   }
 
-  put<T = any>(config: AxiosRequestConfig): Promise<T> {
-    return this.request({ ...config, method: 'PUT' });
+  put<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
+    return this.request({ ...config, method: 'PUT' }, options);
   }
 
-  delete<T = any>(config: AxiosRequestConfig): Promise<T> {
-    return this.request({ ...config, method: 'DELETE' });
+  delete<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
+    return this.request({ ...config, method: 'DELETE' }, options);
   }
 }

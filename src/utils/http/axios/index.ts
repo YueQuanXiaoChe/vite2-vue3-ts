@@ -1,6 +1,12 @@
 import { Axios } from './Axios';
 import { ContentTypeEnum } from '@/enums/httpEnum';
 import type { AxiosTransform, CreateAxiosOptions } from './axiosTransform';
+import { AxiosResponse } from 'axios';
+import { RequestOptions, Result } from './types';
+import { ERROR_RESULT } from './const';
+// import { useMessage } from '@/hooks/web/useMessage';
+
+// const { createDialog, createFailToast, createNotify } = useMessage();
 
 /**
  * @description: 数据处理，方便区分多种处理方式
@@ -32,6 +38,39 @@ const transform: AxiosTransform = {
    */
   responseInterceptorsCatch: (error: Error) => {
     return Promise.reject(error);
+  },
+
+  /**
+   * @description: 处理请求数据
+   */
+  transformRequestHook: (res: AxiosResponse<Result>, options: RequestOptions) => {
+    const { isTransformRequestResult } = options;
+    // 不进行任何处理，直接返回
+    // 用于页面代码可能需要直接获取 code，data，msg，success 这些信息时开启
+    if (!isTransformRequestResult) {
+      return res.data;
+    }
+    if (!res.data) {
+      // return '[HTTP] Request has no return value';
+      return ERROR_RESULT;
+    }
+    //  这里 code，result，message为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
+    const { code, data, msg } = res.data;
+
+    // 这里逻辑可以根据项目进行修改
+    if (code !== '0') {
+      if (msg) {
+        console.log('msg ---->', msg);
+        // if (options.errorMessageMode === 'Dialog') {
+        //   createDialog({ message: msg });
+        // } else if (options.errorMessageMode === 'Toast') {
+        //   createFailToast({ message: msg });
+        // } else if (options.errorMessageMode === 'Notify') {
+        //   createNotify({ message: msg });
+        // }
+      }
+    }
+    return data;
   }
 };
 
@@ -47,7 +86,11 @@ const options: CreateAxiosOptions = {
   // 配置项，下面的选项都可以在独立的接口请求中覆盖
   requestOptions: {
     // 忽略重复请求
-    ignoreCancelToken: true
+    ignoreCancelToken: true,
+    // 需要对返回数据进行处理
+    isTransformRequestResult: true,
+    // 消息提示类型
+    errorMessageMode: 'Toast'
   }
 };
 

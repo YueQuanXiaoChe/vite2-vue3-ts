@@ -9,23 +9,23 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import('@/views/Login/index.vue')
+    component: () => import('@/views/Login/login.vue')
   },
   {
     path: '/home',
     name: 'Home',
-    component: () => import('@/views/Home/index.vue'),
+    component: () => import('@/views/Home/home.vue'),
     children: homeRoutes
   },
   {
     path: '/demo',
     name: 'Demo',
-    component: () => import('@/views/Demo/index.vue')
+    component: () => import('@/views/Demo/demo.vue')
   },
   {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
-    component: () => import('@/views/NotFound/index.vue')
+    component: () => import('@/views/NotFound/notFound.vue')
   }
 ];
 

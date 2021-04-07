@@ -1,23 +1,20 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
   <div>
-    <van-button type="primary" class="test-button" @click="goToLogin">Login</van-button>
-    <van-button type="primary" class="test-button" @click="goToHome">Home</van-button>
-    <van-button type="primary" class="test-button" @click="goToWelcome">Welcome</van-button>
-    <van-button type="primary" class="test-button" @click="goToDemo">Demo</van-button>
+    <van-button type="primary" plain hairline @click="goToLogin">Login</van-button>
+    <van-button type="primary" plain hairline @click="goToHome">Home</van-button>
+    <van-button type="primary" plain hairline @click="goToWelcome">Welcome</van-button>
+    <van-button type="primary" plain hairline @click="goToDemo">Demo</van-button>
   </div>
   <router-view />
   <div>
     Count: {{ $store.state.count }}
-    <van-button type="primary" class="test-button" @click="increment">Add</van-button>
+    <van-button type="primary" plain hairline @click="increment">Add</van-button>
   </div>
   <div class="test-viewport">测试转换</div>
-  <van-field v-model="value" />
-  <div class="test-autoprefixer">
-    <div>aaa</div>
-    <div>bbb</div>
-    <div>ccc</div>
-  </div>
+  <van-cell-group>
+    <van-field v-model="value" label="文本" placeholder="请输入用户名" />
+  </van-cell-group>
   <!-- 单色 iconfont 图标 -->
   <i class="iconfont iconic_zujianguanli"></i>
   <i class="iconfont iconic_search"></i>
@@ -53,17 +50,15 @@
 import { defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
-import { Button, Field } from 'vant';
-import 'vant/es/button/style/index';
-import 'vant/es/field/style/index';
 import { defHttp } from '@/utils/http/axios';
+// import { Field, CellGroup } from 'vant';
 
 export default defineComponent({
   name: 'App',
-  components: {
-    [Button.name]: Button,
-    [Field.name]: Field
-  },
+  // components: {
+  //   [CellGroup.name]: CellGroup,
+  //   [Field.name]: Field
+  // },
   setup() {
     const router = useRouter();
     const goToLogin = () => {
@@ -87,6 +82,7 @@ export default defineComponent({
     const show = ref(true);
     const value = ref('asd');
 
+    // ---------- start 模拟 AxiosCancel 主动取消重复请求 start ----------
     defHttp.request({
       url: 'bp/sys/login',
       method: 'POST',
@@ -116,6 +112,7 @@ export default defineComponent({
         }
       });
     }, 1000);
+    // ---------- end 模拟 AxiosCancel 主动取消重复请求 end ----------
 
     return {
       goToLogin,

@@ -1,4 +1,4 @@
-export type ErrorMessageMode = 'none' | 'modal' | 'message' | undefined;
+export type ErrorMessageMode = 'Dialog' | 'Toast' | 'Notify' | undefined;
 
 export interface RequestOptions {
   // post 请求的时候添加参数到 url

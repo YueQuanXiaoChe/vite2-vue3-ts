@@ -8,7 +8,7 @@
 import { defineComponent } from 'vue';
 import { Button } from 'vant';
 import 'vant/es/button/style/index';
-import { loginApi, LoginParams } from './index';
+import { loginApi, LoginParams } from './demo';
 // import { defHttp } from '@/utils/http/axios';
 
 export default defineComponent({
@@ -23,6 +23,9 @@ export default defineComponent({
       };
       let result: any = await loginApi(param);
       console.log('login result ---->', result);
+      // this.$dialog.alert({
+      //   message: result.msg
+      // });
     }
   }
 });
