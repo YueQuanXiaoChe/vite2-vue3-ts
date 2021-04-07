@@ -4,9 +4,7 @@ import type { AxiosTransform, CreateAxiosOptions } from './axiosTransform';
 import { AxiosResponse } from 'axios';
 import { RequestOptions, Result } from './types';
 import { ERROR_RESULT } from './const';
-// import { useMessage } from '@/hooks/web/useMessage';
-
-// const { createDialog, createFailToast, createNotify } = useMessage();
+import { Dialog, Toast, Notify } from 'vant';
 
 /**
  * @description: 数据处理，方便区分多种处理方式
@@ -60,14 +58,14 @@ const transform: AxiosTransform = {
     // 这里逻辑可以根据项目进行修改
     if (code !== '0') {
       if (msg) {
-        console.log('msg ---->', msg);
-        // if (options.errorMessageMode === 'Dialog') {
-        //   createDialog({ message: msg });
-        // } else if (options.errorMessageMode === 'Toast') {
-        //   createFailToast({ message: msg });
-        // } else if (options.errorMessageMode === 'Notify') {
-        //   createNotify({ message: msg });
-        // }
+        const errMsg = { message: msg };
+        if (options.errorMessageMode === 'Dialog') {
+          Dialog.alert(errMsg);
+        } else if (options.errorMessageMode === 'Toast') {
+          Toast.fail(errMsg);
+        } else if (options.errorMessageMode === 'Notify') {
+          Notify({ type: 'danger', message: msg });
+        }
       }
     }
     return data;
