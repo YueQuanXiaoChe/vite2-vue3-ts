@@ -13,4 +13,4 @@ app.use(router).use(store);
 registerGlobComp(app);
 
 // 挂载到 dom 上
-app.mount('#app', true);
+app.mount('#app');
