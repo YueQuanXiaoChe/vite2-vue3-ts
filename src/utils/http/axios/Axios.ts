@@ -104,13 +104,17 @@ export class Axios {
   }
 
   request<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
-    const conf: AxiosRequestConfig = cloneDeep(config);
+    let conf: AxiosRequestConfig = cloneDeep(config);
 
     const { requestOptions } = this.options;
 
     const opt: RequestOptions = Object.assign({}, requestOptions, options);
 
-    const { requestCatchHook, transformRequestHook } = this.getTransform() || {};
+    const { beforeRequestHook, requestCatchHook, transformRequestHook } = this.getTransform() || {};
+
+    if (beforeRequestHook && isFunction(beforeRequestHook)) {
+      conf = beforeRequestHook(conf, opt);
+    }
 
     return new Promise((resolve, reject) => {
       this.axiosInstance

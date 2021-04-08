@@ -1,7 +1,7 @@
 import { Axios } from './Axios';
 import { ContentTypeEnum } from '@/enums/httpEnum';
 import type { AxiosTransform, CreateAxiosOptions } from './axiosTransform';
-import { AxiosResponse } from 'axios';
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { RequestOptions, Result } from './types';
 import { ERROR_RESULT } from './const';
 import { Dialog, Toast, Notify } from 'vant';
@@ -13,7 +13,7 @@ const transform: AxiosTransform = {
   /**
    * @description: 请求拦截器处理
    */
-  requestInterceptors: (config) => {
+  requestInterceptors: (config: AxiosRequestConfig) => {
     // 每次请求前，如果存在 token 则在请求头中携带 token
     const userToken = window.sessionStorage.getItem('userToken');
     if (userToken) {

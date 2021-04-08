@@ -1,9 +1,9 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
   <div>
-    <van-button type="primary" plain hairline @click="goToLogin">Login</van-button>
-    <van-button type="primary" plain hairline @click="goToHome">Home</van-button>
-    <van-button type="primary" plain hairline @click="goToWelcome">Welcome</van-button>
+    <van-button type="primary" plain hairline class="vb" @click="goToLogin">Login</van-button>
+    <van-button type="primary" plain hairline class="vb" @click="goToHome">Home</van-button>
+    <van-button type="primary" plain hairline class="vb" @click="goToWelcome">Welcome</van-button>
     <van-button type="primary" plain hairline @click="goToDemo">Demo</van-button>
   </div>
   <router-view />
@@ -136,5 +136,8 @@ export default defineComponent({
   vertical-align: -0.15em;
   fill: currentColor;
   overflow: hidden;
+}
+.vb {
+  margin-right: 10px;
 }
 </style>

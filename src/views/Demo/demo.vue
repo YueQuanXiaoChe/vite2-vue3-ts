@@ -23,9 +23,6 @@ export default defineComponent({
       };
       let result: any = await loginApi(param);
       console.log('login result ---->', result);
-      // this.$dialog.alert({
-      //   message: result.msg
-      // });
     }
   }
 });

@@ -33,6 +33,11 @@ export abstract class AxiosTransform {
   responseInterceptorsCatch?: (error: Error) => void;
 
   /**
+   * @description: 请求之前处理 config
+   */
+  beforeRequestHook?: (config: AxiosRequestConfig, options: RequestOptions) => AxiosRequestConfig;
+
+  /**
    * @description: 请求成功处理
    */
   transformRequestHook?: (res: AxiosResponse<Result>, options: RequestOptions) => any;
