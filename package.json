@@ -25,7 +25,8 @@
     "docker-run:stress": "npm run docker-build:stress && docker run -d -p 3000:80 tcsl-mobile-app-stress",
     "docker-run:pre": "npm run docker-build:pre    && docker run -d -p 3000:80 tcsl-mobile-app-pre",
     "docker-run:prod": "npm run docker-build:prod   && docker run -d -p 3000:80 tcsl-mobile-app-prod",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "commit": "git-cz"
   },
   "lint-staged": {
     "*.{vue,js,ts}": "eslint --fix"
@@ -50,7 +51,10 @@
     "@vitejs/plugin-vue-jsx": "^1.1.2",
     "@vue/compiler-sfc": "^3.0.5",
     "autoprefixer": "^10.2.5",
+    "commitizen": "^4.2.4",
     "cross-env": "^7.0.3",
+    "cz-conventional-changelog": "^3.3.0",
+    "cz-customizable": "^6.3.0",
     "dotenv": "^8.2.0",
     "eslint": "^7.22.0",
     "eslint-config-prettier": "^8.1.0",
@@ -75,5 +79,10 @@
   "resolutions": {
     "//": "Used to install imagemin dependencies, because imagemin may not be installed in China.If it is abroad, you can delete it",
     "bin-wrapper": "npm:bin-wrapper-china"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-customizable"
+    }
   }
 }
