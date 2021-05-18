@@ -1,3 +1,8 @@
+/*
+ * @Author: wang xue
+ * @Description:
+ */
+
 module.exports = {
   // 禁用持续查找
   // 默认情况下，ESLint将在根目录下的所有父文件夹中查找配置文件

@@ -1,3 +1,8 @@
+/*
+ * @Author: wang xue
+ * @Description:
+ */
+
 import type { UserConfig, ConfigEnv } from 'vite';
 
 import { loadEnv } from 'vite';

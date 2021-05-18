@@ -1,3 +1,6 @@
+# @Author: wang xue
+# @Description:
+
 # stage-1: build dist folder
 FROM node:14.16.0-alpine as build
 ARG ENV=''
