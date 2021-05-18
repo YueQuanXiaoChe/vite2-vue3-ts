@@ -1,6 +1,10 @@
 {
   "name": "vite2-vue3-ts",
   "version": "0.0.0",
+  "author": {
+    "name": "wang xue",
+    "email": "312759057@qq.com"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -20,7 +24,11 @@
     "docker-run:test": "npm run docker-build:test   && docker run -d -p 3000:80 tcsl-mobile-app-test",
     "docker-run:stress": "npm run docker-build:stress && docker run -d -p 3000:80 tcsl-mobile-app-stress",
     "docker-run:pre": "npm run docker-build:pre    && docker run -d -p 3000:80 tcsl-mobile-app-pre",
-    "docker-run:prod": "npm run docker-build:prod   && docker run -d -p 3000:80 tcsl-mobile-app-prod"
+    "docker-run:prod": "npm run docker-build:prod   && docker run -d -p 3000:80 tcsl-mobile-app-prod",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{vue,js,ts}": "eslint --fix"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -49,7 +57,9 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^7.7.0",
     "http-proxy": "^1.18.1",
+    "husky": "^6.0.0",
     "less": "^4.1.1",
+    "lint-staged": "^11.0.0",
     "postcss-px-to-viewport": "^1.1.1",
     "prettier": "^2.2.1",
     "rollup-plugin-visualizer": "^4.2.0",
