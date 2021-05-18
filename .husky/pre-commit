@@ -1,7 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-# npm test
-
 # 只对 git 暂存区的 `.vue`、`.js`、`.ts` 文件执行 `eslint \--fix`
 npx lint-staged
