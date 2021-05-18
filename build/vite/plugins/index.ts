@@ -10,7 +10,7 @@ import { configStyleImportPlugin } from './styleImport';
 import { configVisualizerConfig } from './visualizer';
 import { configImageminPlugin } from './imagemin';
 
-export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
+export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean): (Plugin | Plugin[])[] {
   const { VITE_USE_IMAGEMIN, VITE_BUILD_COMPRESS } = viteEnv;
 
   const vitePlugins: (Plugin | Plugin[])[] = [vue(), vueJsx()];

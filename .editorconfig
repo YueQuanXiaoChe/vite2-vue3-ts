@@ -1,23 +1,18 @@
 # @Author: wang xue
 # @Description: http://editorconfig.org
 
+# 表示是最顶层的 EditorConfig 配置文件
 root = true
 
-# 对所有文件生效
-# indent_style 缩进类型
-# indent_size 缩进数量
-# end_of_line 换行符格式
-# charset 文件编码
-# trim_trailing_whitespace 是否删除行尾的空格
-# insert_final_newline 是否在文件的最后插入一个空行
-[*]
-indent_style = space
-indent_size = 2
-end_of_line = lf
-charset = utf-8
-trim_trailing_whitespace = true
-insert_final_newline = true
+[*] # 表示所有文件适用
+charset = utf-8 # 设置文件字符集为 utf-8
+indent_style = space # 缩进风格（tab | space）
+indent_size = 2 # 缩进数量
+end_of_line = lf # 控制换行类型(lf | cr | crlf)
+trim_trailing_whitespace = true # 去除行首的任意空白字符
+insert_final_newline = true # 始终在文件末尾插入一个新行
 
-# 对后缀名为 md 的文件生效
+# 表示仅 md 文件适用以下规则
 [*.md]
+max_line_length = off
 trim_trailing_whitespace = false
