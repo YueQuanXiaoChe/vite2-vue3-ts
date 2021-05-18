@@ -1,4 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npx --no-install commitlint --edit 
+# 使用 husky 的 commit-msg hook 触发验证提交信息的命令
+npx --no-install commitlint --edit
