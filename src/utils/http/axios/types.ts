@@ -1,5 +1,6 @@
 export type ErrorMessageMode = 'Dialog' | 'Toast' | 'Notify' | undefined;
 
+// 向服务器发送请求时的各种选项
 export interface RequestOptions {
   // post 请求的时候添加参数到 url
   joinParamsToUrl?: boolean;
@@ -19,6 +20,7 @@ export interface RequestOptions {
   ignoreCancelToken?: boolean;
 }
 
+// 服务器返回的数据的结构
 export interface Result<T = any> {
   code: string;
   data: T;
