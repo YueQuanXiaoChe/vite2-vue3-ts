@@ -86,7 +86,7 @@ export default defineComponent({
     defHttp.request({
       url: 'bp/sys/login',
       method: 'POST',
-      data: {
+      params: {
         username: '18622084468',
         password: 'aa123456'
       },
@@ -97,7 +97,7 @@ export default defineComponent({
 
     defHttp.post({
       url: 'bp/sys/login',
-      data: {
+      params: {
         // username: '18622084468',
         password: 'aa123456'
       }
@@ -106,7 +106,7 @@ export default defineComponent({
     setTimeout(() => {
       defHttp.post({
         url: 'bp/sys/login',
-        data: {
+        params: {
           username: '18622084468'
           // password: 'aa123456'
         }

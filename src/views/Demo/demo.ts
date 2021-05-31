@@ -8,6 +8,6 @@ export interface LoginParams {
 export function loginApi(params: LoginParams) {
   return defHttp.post<any>({
     url: 'bp/sys/login',
-    data: params
+    params
   });
 }

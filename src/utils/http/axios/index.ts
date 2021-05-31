@@ -1,10 +1,18 @@
-import { Axios } from './Axios';
-import { ContentTypeEnum } from '@/enums/httpEnum';
-import type { AxiosTransform, CreateAxiosOptions } from './axiosTransform';
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { RequestOptions, Result } from './types';
-import { ERROR_RESULT } from './const';
+import type { AxiosTransform, CreateAxiosOptions } from './axiosTransform';
+
+import { Axios } from './Axios';
+
 import { Dialog, Toast, Notify } from 'vant';
+
+import { ContentTypeEnum, ResultEnum, RequestEnum } from '@/enums/httpEnum';
+
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
+
+import { isString } from '@/utils/is';
+import { setObjToUrlParams } from '@/utils';
+import { ERROR_RESULT } from './const';
+import { createNow } from './helper';
 
 /**
  * @description: 数据处理，方便区分多种处理方式
@@ -35,6 +43,7 @@ const transform: AxiosTransform = {
    * @description: 响应错误处理
    */
   responseInterceptorsCatch: (error: Error) => {
+    console.log('error ---->', error);
     return Promise.reject(error);
   },
 
@@ -48,29 +57,66 @@ const transform: AxiosTransform = {
     if (!isTransformRequestResult) {
       return res.data;
     }
+
     if (!res.data) {
       // return '[HTTP] Request has no return value';
       return ERROR_RESULT;
     }
-    //  这里 code，result，message为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
-    const { code, data, msg } = res.data;
+    //  这里 code，data，msg, success 为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
+    const { code, data, msg, success } = res.data;
 
     // 这里逻辑可以根据项目进行修改
-    if (code !== '0') {
+    if (success && code === ResultEnum.SUCCESS) {
+      return data;
+    } else {
       if (msg) {
-        const errMsg = { message: msg };
-        if (options.errorMessageMode === 'Dialog') {
-          Dialog.alert(errMsg);
-        } else if (options.errorMessageMode === 'Toast') {
-          Toast.fail(errMsg);
-        } else if (options.errorMessageMode === 'Notify') {
-          Notify({ type: 'danger', message: msg });
+        openErrorMessage(options, msg);
+      }
+      Promise.reject(new Error(msg));
+      return ERROR_RESULT;
+    }
+  },
+
+  beforeRequestHook: (config: AxiosRequestConfig, options: RequestOptions) => {
+    const { joinParamsToUrl, joinTime = true } = options;
+    const params = config.params || {};
+    if (config.method?.toUpperCase() === RequestEnum.GET) {
+      if (!isString(params)) {
+        // 给 get 请求加上时间戳参数，避免从缓存中拿数据。
+        config.params = Object.assign(params || {}, createNow(joinTime, false));
+      } else {
+        // 兼容restful风格
+        config.url += params + `${createNow(joinTime, true)}`;
+        config.params = undefined;
+      }
+    } else {
+      if (!isString(params)) {
+        config.data = params;
+        config.params = undefined;
+        if (joinParamsToUrl) {
+          config.url = setObjToUrlParams(config.url as string, config.data);
         }
+      } else {
+        // 兼容restful风格
+        config.url += params;
+        config.params = undefined;
       }
     }
-    return data;
+    return config;
   }
 };
+
+function openErrorMessage(options: RequestOptions, msg: string): void {
+  // 根据 errorMessageMode 类型显示错误提示
+  const errMsg = { message: msg };
+  if (options.errorMessageMode === 'Dialog') {
+    Dialog.alert(errMsg);
+  } else if (options.errorMessageMode === 'Toast') {
+    Toast.fail(errMsg);
+  } else if (options.errorMessageMode === 'Notify') {
+    Notify({ type: 'danger', message: msg });
+  }
+}
 
 const options: CreateAxiosOptions = {
   baseURL: '/proxy',

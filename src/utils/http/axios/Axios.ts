@@ -1,13 +1,17 @@
 import type { AxiosRequestConfig, AxiosInstance, AxiosResponse } from 'axios';
+import { RequestOptions, Result } from './types';
+import { AxiosTransform, CreateAxiosOptions } from './AxiosTransform';
+
 import axios from 'axios';
 import { AxiosCancel } from './AxiosCancel';
-import { AxiosTransform, CreateAxiosOptions } from './AxiosTransform';
 import { isFunction } from '@/utils/is';
-import { RequestOptions, Result } from './types';
 import { cloneDeep } from 'lodash-es';
-import { ERROR_RESULT } from './const';
-// import qs from 'qs';
 
+import { ERROR_RESULT } from './const';
+
+/**
+ * @description:  axios module
+ */
 export class Axios {
   private axiosInstance: AxiosInstance;
   private options: CreateAxiosOptions;
@@ -18,15 +22,24 @@ export class Axios {
     this.setupInterceptors();
   }
 
+  /**
+   * @description Get transform
+   */
   private getTransform(): AxiosTransform | undefined {
     const { transform } = this.options;
     return transform;
   }
 
+  /**
+   * @description Get axios instance
+   */
   getAxios(): AxiosInstance {
     return this.axiosInstance;
   }
 
+  /**
+   * @description: Reconfigure axios
+   */
   reconfigAxios(options: CreateAxiosOptions): void {
     if (!this.axiosInstance) {
       return;
@@ -35,6 +48,9 @@ export class Axios {
     this.axiosInstance = axios.create(options);
   }
 
+  /**
+   * @description: Set general header
+   */
   setHeader(headers: any): void {
     if (!this.axiosInstance) {
       return;
@@ -42,10 +58,9 @@ export class Axios {
     Object.assign(this.axiosInstance.defaults.headers, headers);
   }
 
-  getOptions(): CreateAxiosOptions {
-    return this.options;
-  }
-
+  /**
+   * @description: Interceptor configuration
+   */
   private setupInterceptors(): void {
     // 请求、响应操作的各种拦截器
     const transform = this.getTransform();
@@ -66,8 +81,11 @@ export class Axios {
     this.axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
       // 如果每次请求的 headers 中有 ignoreCancelToken 标识则使用这个标识
       // 否则使用 options.requestOptions 中的 ignoreCancelToken 标识
-      const ignoreCancelToken = config.headers.ignoreCancelToken;
+      const {
+        headers: { ignoreCancelToken }
+      } = config;
       console.log('ignoreCancelToken ---->', ignoreCancelToken);
+
       const ignoreCancel =
         ignoreCancelToken !== undefined
           ? ignoreCancelToken

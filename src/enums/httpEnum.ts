@@ -1,5 +1,14 @@
 /**
- * @description: request method
+ * @description: Request result type
+ */
+export enum ResultEnum {
+  SUCCESS = '0',
+  ERROR = '-1',
+  TIMEOUT = '401'
+}
+
+/**
+ * @description: Request method
  */
 export enum RequestEnum {
   GET = 'GET',
@@ -9,7 +18,7 @@ export enum RequestEnum {
 }
 
 /**
- * @description:  contentTyp
+ * @description:  Content type
  */
 export enum ContentTypeEnum {
   // json
