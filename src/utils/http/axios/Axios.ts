@@ -84,7 +84,6 @@ export class Axios {
       const {
         headers: { ignoreCancelToken }
       } = config;
-      console.log('ignoreCancelToken ---->', ignoreCancelToken);
 
       const ignoreCancel =
         ignoreCancelToken !== undefined

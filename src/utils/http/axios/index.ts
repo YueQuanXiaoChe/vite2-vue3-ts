@@ -130,7 +130,7 @@ const options: CreateAxiosOptions = {
   // 配置项，下面的选项都可以在独立的接口请求中覆盖
   requestOptions: {
     // 忽略重复请求
-    ignoreCancelToken: true,
+    ignoreCancelToken: false,
     // 需要对返回数据进行处理
     isTransformRequestResult: true,
     // 消息提示类型
