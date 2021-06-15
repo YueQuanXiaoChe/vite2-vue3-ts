@@ -1,5 +1,6 @@
 import type { AxiosRequestConfig, Canceler } from 'axios';
 import axios from 'axios';
+
 import { isFunction } from '@/utils/is';
 
 let pendingMap = new Map<string, Canceler>();

@@ -11,8 +11,8 @@ import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 import { isString } from '@/utils/is';
 import { setObjToUrlParams } from '@/utils';
-import { ERROR_RESULT } from './const';
-import { createNow } from './helper';
+
+import { joinTimestamp } from './helper';
 
 /**
  * @description: 数据处理，方便区分多种处理方式
@@ -51,6 +51,7 @@ const transform: AxiosTransform = {
    * @description: 处理请求数据
    */
   transformRequestHook: (res: AxiosResponse<Result>, options: RequestOptions) => {
+    const apiRequestFailed = 'The interface request failed, please try again later!';
     const { isTransformRequestResult } = options;
     // 不进行任何处理，直接返回
     // 用于页面代码可能需要直接获取 code，data，msg，success 这些信息时开启
@@ -60,7 +61,7 @@ const transform: AxiosTransform = {
 
     if (!res.data) {
       // return '[HTTP] Request has no return value';
-      return ERROR_RESULT;
+      throw new Error(apiRequestFailed);
     }
     //  这里 code，data，msg, success 为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
     const { code, data, msg, success } = res.data;
@@ -72,9 +73,8 @@ const transform: AxiosTransform = {
       if (msg) {
         openErrorMessage(options, msg);
       }
-      Promise.reject(new Error(msg));
-      return ERROR_RESULT;
     }
+    throw new Error(msg || apiRequestFailed);
   },
 
   beforeRequestHook: (config: AxiosRequestConfig, options: RequestOptions) => {
@@ -83,10 +83,10 @@ const transform: AxiosTransform = {
     if (config.method?.toUpperCase() === RequestEnum.GET) {
       if (!isString(params)) {
         // 给 get 请求加上时间戳参数，避免从缓存中拿数据。
-        config.params = Object.assign(params || {}, createNow(joinTime, false));
+        config.params = Object.assign(params || {}, joinTimestamp(joinTime, false));
       } else {
         // 兼容restful风格
-        config.url += params + `${createNow(joinTime, true)}`;
+        config.url += params + `${joinTimestamp(joinTime, true)}`;
         config.params = undefined;
       }
     } else {

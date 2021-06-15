@@ -7,8 +7,6 @@ import { AxiosCancel } from './AxiosCancel';
 import { isFunction } from '@/utils/is';
 import { cloneDeep } from 'lodash-es';
 
-import { ERROR_RESULT } from './const';
-
 /**
  * @description:  axios module
  */
@@ -40,7 +38,7 @@ export class Axios {
   /**
    * @description: Reconfigure axios
    */
-  reconfigAxios(options: CreateAxiosOptions): void {
+  configAxios(options: CreateAxiosOptions): void {
     if (!this.axiosInstance) {
       return;
     }
@@ -89,7 +87,6 @@ export class Axios {
         ignoreCancelToken !== undefined
           ? ignoreCancelToken
           : this.options.requestOptions?.ignoreCancelToken;
-      console.log('ignoreCancel ---->', ignoreCancel);
 
       !ignoreCancel && axiosCancel.addPending(config);
       if (requestInterceptors && isFunction(requestInterceptors)) {
@@ -110,7 +107,6 @@ export class Axios {
       if (responseInterceptors && isFunction(responseInterceptors)) {
         res = responseInterceptors(res);
       }
-      console.log('response ---->', res);
       return res;
     }, undefined);
 
@@ -138,8 +134,12 @@ export class Axios {
         .request<any, AxiosResponse<Result>>(conf)
         .then((res: AxiosResponse<Result>) => {
           if (transformRequestHook && isFunction(transformRequestHook)) {
-            const ret = transformRequestHook(res, opt);
-            ret !== ERROR_RESULT ? resolve(ret) : reject(new Error('request error!'));
+            try {
+              const ret = transformRequestHook(res, opt);
+              resolve(ret);
+            } catch (err) {
+              reject(err || new Error('request error!'));
+            }
             return;
           }
           resolve((res as unknown) as Promise<T>);
