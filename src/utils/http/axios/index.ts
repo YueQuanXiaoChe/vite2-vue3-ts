@@ -2,6 +2,7 @@ import { RequestOptions, Result } from './types';
 import type { AxiosTransform, CreateAxiosOptions } from './axiosTransform';
 
 import { Axios } from './Axios';
+import { checkStatus } from './CheckStatus';
 
 import { Dialog, Toast, Notify } from 'vant';
 
@@ -42,8 +43,28 @@ const transform: AxiosTransform = {
   /**
    * @description: 响应错误处理
    */
-  responseInterceptorsCatch: (error: Error) => {
+  responseInterceptorsCatch: (error: any) => {
     console.log('error ---->', error);
+    // const { t } = useI18n();
+    // const errorLogStore = useErrorLogStoreWithOut();
+    // errorLogStore.addAjaxErrorInfo(error);
+    const { response, code, message } = error || {};
+    const msg: string = response?.data?.error?.message ?? '';
+    const err: string = error?.toString?.() ?? '';
+    try {
+      if (code === 'ECONNABORTED' && message.indexOf('timeout') !== -1) {
+        // createMessage.error(t('sys.api.apiTimeoutMessage'));
+      }
+      if (err?.includes('Network Error')) {
+        // createErrorModal({
+        //   title: t('sys.api.networkException'),
+        //   content: t('sys.api.networkExceptionMsg')
+        // });
+      }
+    } catch (error) {
+      throw new Error(error);
+    }
+    checkStatus(error?.response?.status, msg);
     return Promise.reject(error);
   },
 
