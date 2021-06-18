@@ -8,7 +8,7 @@
   </div>
   <router-view />
   <div>
-    Count: {{ $store.state.count }}
+    Count: {{ count }}
     <van-button type="primary" plain hairline @click="increment">Add</van-button>
   </div>
   <div class="test-viewport">测试转换</div>
@@ -47,9 +47,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { useStore } from 'vuex';
+// import { useStore } from 'vuex';
+import { tempStore } from '@/store/modules/temp';
 import { defHttp } from '@/utils/http/axios';
 // import { Field, CellGroup } from 'vant';
 
@@ -74,10 +75,12 @@ export default defineComponent({
       router.push('/demo');
     };
 
-    const store = useStore();
+    const store = tempStore();
     const increment = () => {
-      store.commit('increment');
+      store.increment();
     };
+
+    const count = computed(() => store.getCount);
 
     const show = ref(true);
     const value = ref('asd');
@@ -120,6 +123,7 @@ export default defineComponent({
       goToWelcome,
       increment,
       goToDemo,
+      count,
       show,
       value
     };
