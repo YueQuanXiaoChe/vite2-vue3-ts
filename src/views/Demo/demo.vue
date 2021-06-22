@@ -21,6 +21,10 @@ export default defineComponent({
         username: '18622084468',
         password: 'aa123456'
       };
+      // let param: LoginParams = {
+      //   username: '15620571557',
+      //   password: '123456a'
+      // };
       let result: any = await loginApi(param);
       console.log('login result ---->', result);
     }

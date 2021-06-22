@@ -1,28 +1,33 @@
 import App from './App.vue';
 import { createApp } from 'vue';
 import { setupStore } from '@/store';
-import router from './router';
+import { router, setupRouter } from '@/router';
 
 import { registerGlobComp } from '@/components/registerGlobComp';
 
 import { isDevelop } from './utils/env';
 
-const app = createApp(App);
+async function bootstrap() {
+  const app = createApp(App);
 
-// Configure store
-setupStore(app);
+  // Configure store
+  setupStore(app);
 
-// Register global components
-registerGlobComp(app);
+  // Register global components
+  registerGlobComp(app);
 
-// 全局注册路由和状态管理
-app.use(router);
+  // Configure routing
+  setupRouter(app);
 
-// 挂载到 dom 上
-app.mount('#app');
+  // Mount when the route is ready
+  // https://next.router.vuejs.org/api/#isready
+  await router.isReady();
 
-// import VConsole from 'vconsole';
-// new VConsole();
+  // 挂载到 dom 上
+  app.mount('#app');
+}
+
+void bootstrap();
 
 // 在创建根实例以后调用，借助异步模块加载能力，只在本地开发中引入
 if (isDevelop()) {

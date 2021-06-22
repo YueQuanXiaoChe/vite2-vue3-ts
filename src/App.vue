@@ -106,6 +106,22 @@ export default defineComponent({
       }
     });
 
+    defHttp.post({
+      url: 'bp/sys/login',
+      params: {
+        // username: '18622084468',
+        password: 'aa123456'
+      }
+    });
+
+    defHttp.post({
+      url: 'bp/sys/login',
+      params: {
+        // username: '18622084468',
+        password: 'aa123456'
+      }
+    });
+
     setTimeout(() => {
       defHttp.post({
         url: 'bp/sys/login',

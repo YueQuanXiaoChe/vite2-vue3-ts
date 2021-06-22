@@ -23,7 +23,6 @@ export class AxiosCancel {
           pendingMap.set(url, cancel);
         }
       });
-    console.log('add pendingMap ---->', pendingMap);
   }
 
   /**
@@ -38,7 +37,6 @@ export class AxiosCancel {
       cancel && cancel(url);
       pendingMap.delete(url);
     }
-    console.log('remove pendingMap ---->', pendingMap);
   }
 
   /**

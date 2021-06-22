@@ -1,4 +1,6 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import type { App } from 'vue';
+
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 import homeRoutes from './modules/home';
 
 const routes: Array<RouteRecordRaw> = [
@@ -29,10 +31,15 @@ const routes: Array<RouteRecordRaw> = [
   }
 ];
 
-const router = createRouter({
-  history: createWebHistory(),
+// app router
+export const router = createRouter({
+  history: createWebHashHistory(),
   routes,
-  strict: true
+  strict: true,
+  scrollBehavior: () => ({ left: 0, top: 0 })
 });
 
-export default router;
+// config router
+export function setupRouter(app: App<Element>) {
+  app.use(router);
+}

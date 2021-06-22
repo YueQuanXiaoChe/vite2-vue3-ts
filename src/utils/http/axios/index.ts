@@ -88,14 +88,12 @@ const transform: AxiosTransform = {
     const { code, data, msg, success } = res.data;
 
     // 这里逻辑可以根据项目进行修改
-    if (success && code === ResultEnum.SUCCESS) {
-      return data;
-    } else {
+    if (!success || code !== ResultEnum.SUCCESS) {
       if (msg) {
         openErrorMessage(options, msg);
       }
     }
-    throw new Error(msg || apiRequestFailed);
+    return data;
   },
 
   beforeRequestHook: (config: AxiosRequestConfig, options: RequestOptions) => {
