@@ -7,6 +7,14 @@ import { registerGlobComp } from '@/components/registerGlobComp';
 
 import { isDevelop } from './utils/env';
 
+// Do not introduce on-demand in local development?
+// In the local development for introduce on-demand, the number of browser requests will increase by about 20%.
+// Which may slow down the browser refresh.
+// Therefore, all are introduced in local development, and only introduced on demand in the production environment
+if (isDevelop()) {
+  import('vant/lib/index.css');
+}
+
 async function bootstrap() {
   const app = createApp(App);
 

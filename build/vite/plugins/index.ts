@@ -19,7 +19,7 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean): (Plugin |
   vitePlugins.push(configHtmlPlugin(viteEnv, isBuild));
 
   // vite-plugin-style-import
-  vitePlugins.push(configStyleImportPlugin());
+  vitePlugins.push(configStyleImportPlugin(isBuild));
 
   // rollup-plugin-visualizer
   vitePlugins.push(configVisualizerConfig());

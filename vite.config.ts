@@ -12,6 +12,15 @@ import { createVitePlugins } from './build/vite/plugins';
 import { createProxy } from './build/vite/proxy';
 import { OUTPUT_DIR } from './build/constant';
 
+import pkg from './package.json';
+import moment from 'moment';
+
+const { dependencies, devDependencies, name, version } = pkg;
+const __APP_INFO__ = {
+  pkg: { dependencies, devDependencies, name, version },
+  lastBuildTime: moment().format('YYYY-MM-DD HH:mm:ss')
+};
+
 // https://vitejs.dev/config/
 export default ({ command, mode }: ConfigEnv): UserConfig => {
   const buildEnv = getBuildEnv();
@@ -45,14 +54,16 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     base: VITE_PUBLIC_PATH,
     root,
     resolve: {
-      alias: {
-        '@': pathResolve('./src')
-      }
+      alias: [
+        {
+          find: '@',
+          replacement: pathResolve('./src')
+        }
+      ]
     },
     server: {
       port: VITE_PORT, // 指定端口
-      // Load proxy configuration from .env
-      proxy: createProxy(VITE_PROXY),
+      proxy: createProxy(VITE_PROXY), // Load proxy configuration from .env
       open: true, // 项目启动时自动打开浏览器
       hmr: {
         overlay: true
@@ -72,7 +83,11 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       },
       // 启用/禁用 brotli 压缩大小报告。压缩大型输出文件可能会很慢，因此禁用该功能可能会提高大型项目的构建性能。
       brotliSize: false,
-      chunkSizeWarningLimit: 1200 // chunk 大小警告的限制（以 kbs 为单位）
+      chunkSizeWarningLimit: 2000 // chunk 大小警告的限制（以 kbs 为单位）
+    },
+
+    define: {
+      __APP_INFO__: JSON.stringify(__APP_INFO__)
     },
 
     css: {
