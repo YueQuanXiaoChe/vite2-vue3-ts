@@ -26,3 +26,24 @@ export function loginApi(params: LoginParams) {
     params
   });
 }
+
+export interface UserInfoResult {
+  OrgName: string;
+  admin: number;
+  comId: string;
+  com_logo: null | string;
+  deptType: string;
+  fullName: string;
+  icon: string;
+  mobile: string;
+  ucId: string;
+  uid: string;
+  userComs: number;
+  welcome: number;
+}
+
+export function userInfoApi(token: string) {
+  return defHttp.get<UserInfoResult>({
+    url: 'bp/thirdparty/user/' + token
+  });
+}
